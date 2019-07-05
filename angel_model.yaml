@@ -1,0 +1,17 @@
+settings:
+    trigger: "222*-22"
+    monitor: 
+        - "master"
+        - "feature/*"
+    workspace: ./Bin/
+gates:
+    build:
+        commands:
+            - "cmake .."
+            - "make"
+    test:
+        commands:
+            - "ctest"
+    report:
+        folder:
+            - ""
