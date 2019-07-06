@@ -2,7 +2,8 @@
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
-from yaml import safe_load as config_load 
+from yaml         import safe_load as config_load 
+from kernel.timer import Timer
 # -----------------------------------------------------------------------------
 # Angel - Implementation
 # -----------------------------------------------------------------------------
@@ -31,9 +32,13 @@ class Angel:
     # run 
     # -----------------------------------------------------
     def run(self):
-        data = {}
-        for name, function in self.__gates.items():
-            function(data)
+        timer = Timer(self.__config["settings"]["trigger"])
+        while(True):
+            if timer.event():
+                data = {}
+                for name, function in self.__gates.items():
+                    function(data)
+            timer.sleep()
 # -----------------------------------------------------------------------------
 # end
 # -----------------------------------------------------------------------------

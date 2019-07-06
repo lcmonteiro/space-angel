@@ -1,5 +1,6 @@
 settings:
-    trigger: "222*-22"
+    # date format (yyyy/mm/dd (w) hh:mm:ss)
+    trigger: ".*(0|2|4|6|8)$"
     monitor: 
         - "master"
         - "feature/*"
