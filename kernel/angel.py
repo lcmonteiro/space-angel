@@ -2,8 +2,9 @@
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
-from yaml         import safe_load as config_load 
+from yaml         import safe_load   as config_load 
 from kernel.timer import Timer
+from collections  import OrderedDict as Pipeline
 # -----------------------------------------------------------------------------
 # Angel - Implementation
 # -----------------------------------------------------------------------------
@@ -16,8 +17,9 @@ class Angel:
         with open(config, 'r') as stream:
             self.__config = config_load(stream)
         # gate container
-        self.__gates = {}
-        print(self.__config)
+        self.__gates = Pipeline()
+        # load pipeline
+        self._pipeline()
     
     # -----------------------------------------------------
     # gate decorator 
@@ -35,10 +37,21 @@ class Angel:
         timer = Timer(self.__config["settings"]["trigger"])
         while(True):
             if timer.event():
-                data = {}
-                for name, function in self.__gates.items():
-                    function(data)
+                self._process()
             timer.sleep()
+            
+    # -----------------------------------------------------
+    # process gates 
+    # -----------------------------------------------------
+    def _process(self):
+        data = {}
+        for name, gate in self.__gates.items():
+            gate(self, data)
+    # -----------------------------------------------------
+    # process gates 
+    # -----------------------------------------------------
+    def get(self, tag):
+        return self.__config["settings"][tag]
 # -----------------------------------------------------------------------------
 # end
 # -----------------------------------------------------------------------------
