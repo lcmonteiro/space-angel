@@ -2,8 +2,9 @@ settings:
     # date format (yyyy/mm/dd (w) hh:mm:ss)
     trigger: ".*(0|2|4|6|8)$"
     monitor: 
-        - "master"
-        - "feature/*"
+        - branch: "master" 
+        - branch: "feature/*"   
+          origin: "master"
     workspace: ./Bin/
 gates:
     build:

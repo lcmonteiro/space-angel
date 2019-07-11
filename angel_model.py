@@ -16,7 +16,8 @@ class MyAngel(Angel):
         # ---------------------------------------------------------
         @self.gate('build')
         def build(self, data):
-            print("build")
+            print(self._context.base.monitor)
+            print(self._context.gate.commands)
             return data
         # ---------------------------------------------------------
         # test
