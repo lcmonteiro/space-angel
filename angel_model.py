@@ -2,19 +2,24 @@
 # -----------------------------------------------------------------------------
 # imports
 # -----------------------------------------------------------------------------
-from sys          import argv
-from kernel.angel import Angel
-from decorators   import git_process
+from sys      import argv
+from kernel   import Angel
+# ---------------------------------------------------------
+# decorators
+# ---------------------------------------------------------
+from angels   import git_angel
+from gates    import terminal_gate
 # -----------------------------------------------------------------------------
 # process
 # -----------------------------------------------------------------------------
-@git_process
+@git_angel
 class MyAngel(Angel):
     def _pipeline(self):
         # ---------------------------------------------------------
         # build
         # ---------------------------------------------------------
         @self.gate('build')
+        @terminal_gate
         def build(self, data):
             print(self._context.base.monitor)
             print(self._context.gate.commands)

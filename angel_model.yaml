@@ -3,7 +3,6 @@ settings:
     trigger: ".*(0|2|4|6|8)$"
     monitor: 
         - branch: "master" 
-        - branch: "feature/*"   
           origin: "master"
     workspace: ./Bin/
 gates:

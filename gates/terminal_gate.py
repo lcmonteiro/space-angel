@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # imports
 # -----------------------------------------------------------------------------
-from resources import GitRepository
+from resources import Repository
 # -----------------------------------------------------------------------------
 # helpers
 # -----------------------------------------------------------------------------
@@ -9,20 +9,15 @@ from resources import GitRepository
 # -----------------------------------------------------------------------------
 # decorator
 # -----------------------------------------------------------------------------
-def git_process(cls):
+def terminal_gate(func):
     # create a git repository instance
-    repo = GitRepository()
+    #repo = Repository()
     # save original process
-    process_orig = cls._process
-    def process(self):
-        # process for each monitor
-        for monitor in self._context.monitor:
-            # checkout
-            repo.checkout(monitor.branch)
-
-        print("decorate::process")
-        process_orig(self)
-
-
-    cls._process = process
-    return cls
+    def wrap(self, data):
+        print("decorate::terminal_gate")
+        func(self, data)
+    # return terminal wrap
+    return wrap
+# -----------------------------------------------------------------------------
+# end
+# -----------------------------------------------------------------------------
