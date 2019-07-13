@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # imports
 # -----------------------------------------------------------------------------
-from resources import Repository
+from resources import Terminal
 # -----------------------------------------------------------------------------
 # helpers
 # -----------------------------------------------------------------------------
@@ -10,12 +10,14 @@ from resources import Repository
 # decorator
 # -----------------------------------------------------------------------------
 def terminal_gate(func):
-    # create a git repository instance
-    #repo = Repository()
-    # save original process
+    # wrap function
     def wrap(self, data):
-        print("decorate::terminal_gate")
+        # set gate attribute
+        setattr(self, "terminal", Terminal(self._context.gate.commands))
+        # call function
         func(self, data)
+        # remove gate attribute
+        delattr(self, "terminal")
     # return terminal wrap
     return wrap
 # -----------------------------------------------------------------------------

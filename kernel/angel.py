@@ -3,21 +3,10 @@
 # Imports
 # -----------------------------------------------------------------------------
 from yaml         import safe_load   as config_load 
-from kernel.timer import Timer
 from collections  import OrderedDict as Pipeline
-# -----------------------------------------------------------------------------
-# Bunch : convert {"a": {"b":1 }} to a.b  
-# -----------------------------------------------------------------------------
-class Bunch(object):
-    def __init__(self, d):
-        for k, o in d.items():
-            if isinstance(o, (list, tuple)):
-                setattr(self, k, [self.__get_obj(x) for x in o])
-            else:
-                setattr(self, k, self.__get_obj(o))
+from kernel.timer import Timer
+from kernel.bunch import Bunch
 
-    def __get_obj(self, o):
-        return Bunch(o) if isinstance(o, dict) else o
 # -----------------------------------------------------------------------------
 # Angel - Implementation
 # -----------------------------------------------------------------------------

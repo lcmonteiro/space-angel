@@ -8,8 +8,7 @@ settings:
 gates:
     build:
         commands:
-            - "cmake .."
-            - "make"
+            build: "cmake .."
     test:
         commands:
             - "ctest"
