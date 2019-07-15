@@ -16,7 +16,7 @@ def git_angel(cls):
     process_orig = cls._process
     def process(self):
         # process for each monitor
-        for monitor in self._context.monitor:
+        for monitor in self.angel.monitor:
             # checkout
             try:
                 repo.checkout(

@@ -25,7 +25,7 @@ class MyAngel(Angel):
             self.terminal.build()
             
 
-            print(self._context.gate.commands)
+            print(self.gate.commands)
             return data
         # ---------------------------------------------------------
         # test

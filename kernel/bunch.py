@@ -14,6 +14,18 @@ class Bunch(object):
                 setattr(self, k, self.__get_obj(o))
     
     # -----------------------------------------------------
+    # item - retrun the item by name
+    # -----------------------------------------------------
+    def __getitem__(self, name):
+        return getattr(self, name)
+    
+    # -----------------------------------------------------
+    # representation 
+    # -----------------------------------------------------
+    def __repr__(self):
+        return repr(self.__dict__)
+
+    # -----------------------------------------------------
     # items - return all attributes
     # -----------------------------------------------------
     def items(self):
