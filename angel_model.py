@@ -22,10 +22,7 @@ class MyAngel(Angel):
         @terminal_gate
         def build(self, data):
             # build code
-            self.terminal.build()
-            
-
-            print(self.gate.commands)
+            print(self.terminal.build())
             return data
         # ---------------------------------------------------------
         # test

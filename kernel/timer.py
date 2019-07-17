@@ -39,7 +39,7 @@ class Timer:
         # increment counter
         self.__counter += 1
         # sleep
-        with suppress(IOError):
+        with suppress(ValueError):
             sleep(self.__counter - time())
 
 # -----------------------------------------------------------------------------
