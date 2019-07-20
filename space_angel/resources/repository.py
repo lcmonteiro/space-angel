@@ -26,7 +26,7 @@ class Repository:
     # ancestor
     # -----------------------------------------------------
     def ancestor(self, point1, point2):
-        pass
+        return self.__repo.git.merge_base(point1, point2)
 
 # -----------------------------------------------------------------------------
 # end

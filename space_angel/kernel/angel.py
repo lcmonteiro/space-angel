@@ -4,9 +4,11 @@
 # -----------------------------------------------------------------------------
 from yaml         import safe_load   as config_load 
 from collections  import OrderedDict as Pipeline
-from kernel.timer import Timer
-from kernel.bunch import Bunch
-
+# ---------------------------------------------------------
+# local
+# ---------------------------------------------------------
+from .timer       import Timer
+from .bunch       import Bunch
 # -----------------------------------------------------------------------------
 # Angel - Implementation
 # -----------------------------------------------------------------------------

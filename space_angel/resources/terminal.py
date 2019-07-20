@@ -5,10 +5,13 @@
 from subprocess import Popen
 from subprocess import PIPE
 from platform   import system
-from kernel     import Reader
 from parse      import parse
 from os         import linesep
 from ast        import literal_eval
+# ---------------------------------------------------------
+# local
+# ---------------------------------------------------------
+from ..kernel     import Reader
 # -------------------------------------------------------------------------------------------------
 # Terminal - context
 # -------------------------------------------------------------------------------------------------
