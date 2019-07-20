@@ -13,14 +13,23 @@ with open("README.md", "r") as fh:
 setup(
     name='space-angel',  
     version='0.1',
-    scripts=[''] ,
     author="Luis Monteiro",
     author_email="monteiro.lcm@gmail.com",
     description="Angel",
     long_description=long_description,
-    long_description_content_type="text/markdown",
     url="",
-    packages=find_packages(),
+    packages=[
+        'space_angel',
+        'space_angel.kernel',
+        'space_angel.angels',
+        'space_angel.gates',
+        'space_angel.resources'
+    ],
+    install_requires=[
+        'parse',
+        'gitpython'
+
+    ],
     classifiers=[],
  )
  # ----------------------------------------------------------------------------
