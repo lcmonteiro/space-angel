@@ -2,10 +2,14 @@
 # -----------------------------------------------------------------------------
 # Imports
 # -----------------------------------------------------------------------------
-from yaml         import safe_load   as config_load 
+# external
+# ---------------------------------------------------------
+from os           import getcwd, chdir, mkdir
+from os.path      import exists
+from yaml         import safe_load   as loader 
 from collections  import OrderedDict as Pipeline
 # ---------------------------------------------------------
-# local
+# internal
 # ---------------------------------------------------------
 from .timer       import Timer
 from .bunch       import Bunch
@@ -19,12 +23,14 @@ class Angel:
     def __init__(self, config):
         # load configuration
         with open(config, 'r') as stream:
-            self.__config = Bunch(config_load(stream))
+            self.__config = Bunch(loader(stream))
+        # change workdirectory
+        self.__set_workspace(self.__config.settings.workspace)
         # gate container
         self.__gates = Pipeline()
         # load pipeline
         self._pipeline()
-    
+        
     # -----------------------------------------------------
     # gate decorator 
     # -----------------------------------------------------
@@ -54,6 +60,7 @@ class Angel:
     # -----------------------------------------------------
     def _process(self):
         data = {}
+        # process each gate
         for name, gate in self.__gates.items():
             # enable gate attribute
             setattr(self, "gate", self.__config.gates[name])
@@ -64,10 +71,13 @@ class Angel:
         return data
 
     # -----------------------------------------------------
-    # process gates 
+    # helpers
     # -----------------------------------------------------
-    def __(self, tag):
-        return self.__config["settings"][tag]
+    def __set_workspace(self, path):
+        if not exists(path):
+            mkdir(path)
+        chdir(path)
+        
 # -----------------------------------------------------------------------------
 # end
 # -----------------------------------------------------------------------------
