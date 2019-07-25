@@ -3,10 +3,12 @@
 # imports
 # -----------------------------------------------------------------------------
 from sys           import argv
+from pprint        import pprint
 # ---------------------------------------------------------
 # base
 # ---------------------------------------------------------
 from space_angel   import Angel
+from space_angel   import Logger
 # ---------------------------------------------------------
 # decorators
 # ---------------------------------------------------------
@@ -23,10 +25,27 @@ class MyAngel(Angel):
         # ---------------------------------------------------------
         @self.gate('build')
         @terminal_gate
-        def build(self, data):
+        def build(self, backlog):
+            log = Logger()
             # build code
-            print(self.terminal.build())
-            return data
+            pprint(log('build.1', self.terminal.build))
+
+            {
+                'header': None,
+                'result': None,
+                'log' :[
+
+                ],
+                'err':[
+
+                ],
+                'sub':[
+                    {
+
+                    }
+                ]
+            }
+            return log
         # ---------------------------------------------------------
         # test
         # ---------------------------------------------------------
