@@ -2,6 +2,7 @@
 # -----------------------------------------------------------------------------
 # export base classes
 # -----------------------------------------------------------------------------
+from space_angel.kernel import start
 from space_angel.kernel import Angel
 from space_angel.kernel import Logger
 # -----------------------------------------------------------------------------

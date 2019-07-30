@@ -2,13 +2,12 @@
 # -----------------------------------------------------------------------------
 # imports
 # -----------------------------------------------------------------------------
-from sys           import argv
 from pprint        import pprint
 # ---------------------------------------------------------
 # base
 # ---------------------------------------------------------
+from space_angel   import start
 from space_angel   import Angel
-from space_angel   import Logger
 # ---------------------------------------------------------
 # decorators
 # ---------------------------------------------------------
@@ -25,44 +24,44 @@ class MyAngel(Angel):
         # ---------------------------------------------------------
         @self.gate('build')
         @terminal_gate
-        def build(self, backlog):
-            log = Logger()
+        def build(self, log, backlog):
             # build code
-            pprint(log('build.1', self.terminal.build))
+            #log('build.1', self.terminal.build, base_result=0.9)
+            log('build.1', self.terminal.build)
 
-            {
-                'header': None,
-                'result': None,
-                'log' :[
+            # {
+            #     'header': None,
+            #     'result': None,
+            #     'log' :[
 
-                ],
-                'err':[
+            #     ],
+            #     'err':[
 
-                ],
-                'sub':[
-                    {
+            #     ],
+            #     'sub':[
+            #         {
 
-                    }
-                ]
-            }
-            return log
+            #         }
+            #     ]
+            # }
+
         # ---------------------------------------------------------
         # test
         # ---------------------------------------------------------
         @self.gate('test')
-        def test(self, data):
+        def test(self, log, backlog):
             print("test")
-            return data
+
         # ---------------------------------------------------------
         # report
         # ---------------------------------------------------------
-        @self.gate('report')
-        #@gate.markdown
-        def report(self, data):
-            print("report")
-            return data
+        @self.gate_force('report')
+        #@markdown_gate
+        def report(self, log, backlog):
+            print("report", backlog)
+        
 # -----------------------------------------------------------------------------
 # main
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
-    MyAngel(argv[1]).run()
+    start(MyAngel)

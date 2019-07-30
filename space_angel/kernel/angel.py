@@ -6,6 +6,7 @@
 # ---------------------------------------------------------
 from os           import getcwd, chdir, mkdir
 from os.path      import exists
+from sys          import argv
 from yaml         import safe_load   as loader 
 from collections  import OrderedDict as Pipeline
 # ---------------------------------------------------------
@@ -13,6 +14,7 @@ from collections  import OrderedDict as Pipeline
 # ---------------------------------------------------------
 from .timer       import Timer
 from .bunch       import Bunch
+from .logger      import Logger
 # -----------------------------------------------------------------------------
 # Angel - Implementation
 # -----------------------------------------------------------------------------
@@ -36,7 +38,22 @@ class Angel:
     # -----------------------------------------------------
     def gate(self, name):
         def decorator(func):
-            self.__gates[name] = func
+            self.__gates[name] = Bunch({
+                'call'  : func, 
+                'force' : False
+            }) 
+            return func
+        return decorator
+
+    # -----------------------------------------------------
+    # gate force decorator 
+    # -----------------------------------------------------
+    def gate_force(self, name):
+        def decorator(func):
+            self.__gates[name] = Bunch({
+                'call'  : func, 
+                'force' : True
+            }) 
             return func
         return decorator
     
@@ -59,16 +76,23 @@ class Angel:
     # process gates 
     # -----------------------------------------------------
     def _process(self):
-        data = {}
+        backlog = Logger()
         # process each gate
+        pipeline = True
         for name, gate in self.__gates.items():
-            # enable gate attribute
-            setattr(self, "gate", self.__config.gates[name])
-            # process gate
-            gate(self, data)
-            # disable gate attribute
-            delattr(self, "gate")
-        return data
+            if pipeline or gate.force:
+                log = Logger()
+                # enable gate attribute
+                setattr(self, "gate", self.__config.gates[name])
+                # process gate
+                try:
+                    gate.call(self, log, backlog)
+                    pipeline = True
+                except:
+                    pipeline = False
+                # disable gate attribute
+                delattr(self, "gate")
+        return backlog
 
     # -----------------------------------------------------
     # helpers
@@ -77,7 +101,17 @@ class Angel:
         if not exists(path):
             mkdir(path)
         chdir(path)
-        
+
+# -----------------------------------------------------------------------------
+# Angel - Start
+# -----------------------------------------------------------------------------
+def start(angel):
+    try:
+        angel(argv[1]).run()
+    except IndexError:
+        print("Usage: angel.py [CONFIG_FILE].yaml")
+    except KeyboardInterrupt:
+        pass
 # -----------------------------------------------------------------------------
 # end
 # -----------------------------------------------------------------------------
