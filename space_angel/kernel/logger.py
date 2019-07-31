@@ -33,7 +33,7 @@ class Logger(Action):
     # -----------------------------------------------------
     # call - log register
     # -----------------------------------------------------
-    def __call__(self, path=None, action=None, base_result=None):
+    def __call__(self, path=None, action=None, base_result=0):
         # execute
         if action is None:
             # update result recursive 
@@ -63,7 +63,14 @@ class Logger(Action):
     # update results 
     # -----------------------------------------------------
     def __update(self):
-        return self
+        result = 1
+        # compute result
+        for name, action in self._actions.items():
+            if isinstance(action, Logger):
+                action()
+            result *= action.result() 
+        # update result
+        return super().__call__(result)
 
     # -----------------------------------------------------
     # insert action 

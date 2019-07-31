@@ -76,12 +76,12 @@ class Angel:
     # process gates 
     # -----------------------------------------------------
     def _process(self):
-        backlog = Logger()
+        backlog = Logger('gates')
         # process each gate
         pipeline = True
         for name, gate in self.__gates.items():
             if pipeline or gate.force:
-                log = Logger()
+                log = Logger(name)
                 # enable gate attribute
                 setattr(self, "gate", self.__config.gates[name])
                 # process gate
@@ -92,7 +92,7 @@ class Angel:
                     pipeline = False
                 # disable gate attribute
                 delattr(self, "gate")
-        return backlog
+        return backlog()
 
     # -----------------------------------------------------
     # helpers

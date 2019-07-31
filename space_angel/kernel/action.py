@@ -9,17 +9,20 @@ class Action(object):
     def __init__(self, header=None):
         # attributes
         self._header = header
-        self._result = None
-        self._output = None
-        self._errors = None
+        self._result = 0
+        self._output = []
+        self._errors = []
 
     # -----------------------------------------------------
     # call - log register
     # -----------------------------------------------------
-    def __call__(self, result=0, output=[], errors=[]):
-        self._result = result
-        self._output = output
-        self._errors = errors
+    def __call__(self, result=None, output=None, errors=None):
+        if result is not None:
+            self._result = result  
+        if output is not None:
+            self._output = output
+        if errors is not None:
+            self._errors = errors
         return self
     
     # -----------------------------------------------------
