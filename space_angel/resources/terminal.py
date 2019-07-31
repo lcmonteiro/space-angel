@@ -27,6 +27,9 @@ class Terminal:
         # initialization
         # -------------------------------------------------
         def __init__(self, shell, cmd):
+            # init super
+            super().__init__(cmd)
+            # init local
             self.__shell = shell
             self.__cmd   = cmd
 
@@ -37,7 +40,7 @@ class Terminal:
             # call
             res = self.__shell(self.__cmd)
             # result 
-            return super().__call__(self.__cmd, 
+            return super().__call__(
                 res[0], 
                 res[1]['out'], 
                 res[1]['err'])

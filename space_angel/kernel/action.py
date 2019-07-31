@@ -6,9 +6,9 @@ class Action(object):
     # -----------------------------------------------------
     # initialization
     # -----------------------------------------------------
-    def __init__(self):
+    def __init__(self, header=None):
         # attributes
-        self._header = None
+        self._header = header
         self._result = None
         self._output = None
         self._errors = None
@@ -16,14 +16,17 @@ class Action(object):
     # -----------------------------------------------------
     # call - log register
     # -----------------------------------------------------
-    def __call__(self, 
-        header= None, result=None, output=None, errors=None):
-        self._header = header
+    def __call__(self, result=0, output=[], errors=[]):
         self._result = result
         self._output = output
         self._errors = errors
         return self
     
+    # -----------------------------------------------------
+    # get result 
+    # -----------------------------------------------------
+    def result(self):
+        return self._result
     # -----------------------------------------------------
     # representation 
     # -----------------------------------------------------

@@ -11,8 +11,8 @@ class Logger(Action):
     # -----------------------------------------------------
     # initialization
     # -----------------------------------------------------
-    def __init__(self):
-        super().__init__()
+    def __init__(self, header):
+        super().__init__(header)
         # attributes
         self._actions = {}
     
@@ -21,7 +21,7 @@ class Logger(Action):
     # -----------------------------------------------------
     def __getitem__(self, name):
         if name not in self._actions:
-            self._actions[name] = Logger()
+            self._actions[name] = Logger(name)
         return self._actions[name]
 
     # -----------------------------------------------------
@@ -33,18 +33,19 @@ class Logger(Action):
     # -----------------------------------------------------
     # call - log register
     # -----------------------------------------------------
-    def __call__(self, path, action):
-        try:
-            # execute action
-            a = action()
-            # save action
-            p = path.split('.')
-            # action location
-            l = reduce(lambda a, i: a[i], p[:-1], self)
-            # 
-            l[p[-1]] = a
-        except:
-            raise self
+    def __call__(self, path=None, action=None, base_result=None):
+        # execute
+        if action is None:
+            # update result recursive 
+            action = self.__update()
+        else:
+            # insert action in path
+            action = self.__insert(path.split('.'), action())
+        # validation
+        if action.result() < base_result:
+            raise Exception("{actual} < {expect}".format(
+                actual = action.result(),
+                expect = base_result))
         return self
     
     # -----------------------------------------------------
@@ -58,6 +59,21 @@ class Logger(Action):
             'errors' : self._errors,
             'actions': self._actions})
 
+    # -----------------------------------------------------
+    # update results 
+    # -----------------------------------------------------
+    def __update(self):
+        return self
+
+    # -----------------------------------------------------
+    # insert action 
+    # -----------------------------------------------------
+    def __insert(self, path, action):
+        # save action on location
+        reduce(lambda a, i: a[i], path[:-1], self)[
+            path[-1]
+        ] = action
+        return action
 # -----------------------------------------------------------------------------
 # end
 # -----------------------------------------------------------------------------
