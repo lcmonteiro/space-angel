@@ -92,6 +92,8 @@ class Angel:
                     pipeline = False
                 # disable gate attribute
                 delattr(self, "gate")
+                # save log in backlog
+                backlog(name, log)
         return backlog()
 
     # -----------------------------------------------------
