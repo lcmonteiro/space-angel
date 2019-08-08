@@ -28,6 +28,21 @@ class Repository:
     def ancestor(self, point1, point2):
         return self.__repo.git.merge_base(point1, point2)
 
+    # -----------------------------------------------------
+    # log 
+    # -----------------------------------------------------
+    def log(self, end, method=None):
+        for each in self.__repo.iter_commits('head'):
+            if each.hexsha == end:
+                break
+            print(each.hexsha)
+            
+    def __log_all(self, end, method=None):
+        for each in self.__repo.iter_commits('head'):
+            if each.hexsha == end:
+                break
+            print(each.hexsha)
+
 # -----------------------------------------------------------------------------
 # end
 # -----------------------------------------------------------------------------
