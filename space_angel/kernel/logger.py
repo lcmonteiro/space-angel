@@ -11,8 +11,9 @@ class Logger(Action):
     # -----------------------------------------------------
     # initialization
     # -----------------------------------------------------
-    def __init__(self, header):
-        super().__init__(header)
+    def __init__(self, header=None):
+        # update base
+        super().__init__(header=header)
         # attributes
         self._actions = {}
     

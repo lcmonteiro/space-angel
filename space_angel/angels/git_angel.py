@@ -17,18 +17,29 @@ def git_angel(cls):
     def process(self):
         # process for each monitor
         for monitor in self.angel.monitor:
-            # checkout
+            angel  = monitor.branch + "-angel"
+            branch = monitor.branch
+            origin = monitor.origin
+            # checkout angel
             try:
-                repo.checkout(
-                    monitor.branch + "-angel")
+                repo.checkout(angel)
             except:
                 repo.checkout(
-                    monitor.branch + "-angel", 
-                    repo.ancestor(monitor.branch, monitor.origin))
-
-        print("decorate::process")
-        process_orig(self)
-
+                    angel, 
+                    repo.ancestor(branch, origin))
+            # find test points
+            for point in reversed(
+                list(repo.log(branch, repo.ancestor(branch, angel)))):
+                # merge test point
+                repo.merge(point)
+                print("decorate::process")
+                process_orig(self)
+                # commint test result
+                repo.commit("CHECKPOINT:")
 
     cls._process = process
     return cls
+
+# -----------------------------------------------------------------------------
+# end
+# -----------------------------------------------------------------------------
