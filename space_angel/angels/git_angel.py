@@ -32,8 +32,7 @@ def git_angel(cls):
                 list(repo.log(branch, repo.ancestor(branch, angel)))):
                 # merge test point
                 repo.merge(point)
-                print("decorate::process")
-                process_orig(self)
+                print('git::process', process_orig(self))
                 # commint test result
                 repo.commit("CHECKPOINT:")
 
