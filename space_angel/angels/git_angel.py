@@ -29,12 +29,14 @@ def git_angel(cls):
                     repo.ancestor(branch, origin))
             # find test points
             for point in reversed(
-                list(repo.log(branch, repo.ancestor(branch, angel)))):
+                list(repo.log(branch, repo.ancestor(branch, angel), 'fib'))):
+                print('point=', point)
                 # merge test point
                 repo.merge(point)
+                # process
                 print('git::process', process_orig(self))
                 # commint test result
-                repo.commit("CHECKPOINT:")
+                repo.commit("Checkpoint commit:")
 
     cls._process = process
     return cls

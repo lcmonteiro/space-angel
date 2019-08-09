@@ -110,6 +110,8 @@ class Angel:
 def start(angel):
     try:
         angel(argv[1]).run()
+    except Exception as ex:
+        print('Exception: %s' %(ex))
     except IndexError:
         print("Usage: angel.py [CONFIG_FILE].yaml")
     except KeyboardInterrupt:
