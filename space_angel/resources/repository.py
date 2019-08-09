@@ -32,7 +32,8 @@ class Repository:
     # commint
     # ---------------------------------------------------------------
     def commit(self, msg):
-        print('commit=', msg)
+        #git commit -a -m "new message"
+        self.__repo.git.commit('--allow-empty', '--all', '-m', msg)
     
     # ---------------------------------------------------------------
     # ancestor
