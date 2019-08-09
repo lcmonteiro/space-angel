@@ -26,13 +26,13 @@ class Repository:
     # merge
     # ---------------------------------------------------------------
     def merge(self, point = None):
-        pass
+        self.__repo.git.merge(point)
         
     # ---------------------------------------------------------------
     # commint
     # ---------------------------------------------------------------
-    def commint(self, name, point = None):
-        pass
+    def commit(self, msg):
+        print('commit=', msg)
     
     # ---------------------------------------------------------------
     # ancestor
