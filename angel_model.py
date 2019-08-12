@@ -58,7 +58,7 @@ class MyAngel(Angel):
         @self.gate_force('report')
         #@markdown_gate
         def report(self, log, backlog):
-            print("report", backlog)
+            print("report")
         
 # -----------------------------------------------------------------------------
 # main

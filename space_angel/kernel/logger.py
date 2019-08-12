@@ -61,17 +61,40 @@ class Logger(Action):
             'actions': self._actions})
 
     # -----------------------------------------------------
+    # length 
+    # -----------------------------------------------------
+    def __len__(self):
+        result = 0
+        # compute result
+        for name, action in self._actions.items():
+            if isinstance(action, Logger):
+                result += len(action)
+            else:
+                result += 1
+        # update result
+        return result
+
+    # -----------------------------------------------------
+    # iterate over actions 
+    # -----------------------------------------------------   
+    def __iter__(self):
+        for name, action in self._actions.items():
+            yield name, action
+
+    # -----------------------------------------------------
     # update results 
     # -----------------------------------------------------
     def __update(self):
-        result = 1
+        acc = 0
+        tot = 0
         # compute result
         for name, action in self._actions.items():
             if isinstance(action, Logger):
                 action()
-            result *= action.result() 
+            acc += action.result() 
+            tot += 1 
         # update result
-        return super().__call__(result)
+        return super().__call__(acc/tot if acc else 0)
 
     # -----------------------------------------------------
     # insert action 

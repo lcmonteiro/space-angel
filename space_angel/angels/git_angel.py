@@ -2,14 +2,26 @@
 # imports
 # -----------------------------------------------------------------------------
 from ..resources import Repository
-# -----------------------------------------------------------------------------
-# helpers
-# -----------------------------------------------------------------------------
+from pprint      import pprint
 
 # -----------------------------------------------------------------------------
 # decorator
 # -----------------------------------------------------------------------------
 def git_angel(cls):
+    # ---------------------------------------------------------------
+    # helpers
+    # ---------------------------------------------------------------
+    # log message
+    # ---------------------------------------------------------------
+    def summary(rep):
+        msg = ''
+        for gate, log in rep:
+            if len(log) > 0:
+                msg += ' #{g}={r}'.format(g=gate, r=log.result())
+        return msg
+    # ---------------------------------------------------------------
+    # process
+    # ---------------------------------------------------------------
     # create a git repository instance
     repo = Repository()
     # save original process
@@ -30,13 +42,12 @@ def git_angel(cls):
             # find test points
             for point in reversed(
                 list(repo.log(branch, repo.ancestor(branch, angel), 'fib'))):
-                print('point=', point)
                 # merge test point
                 repo.merge(point)
                 # process
-                print('git::process', process_orig(self))
+                rep = process_orig(self)
                 # commint test result
-                repo.commit("Checkpoint commit:")
+                repo.commit("Checkpoint commit:{s}".format(s=summary(rep())))
 
     cls._process = process
     return cls
