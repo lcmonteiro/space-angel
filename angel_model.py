@@ -13,6 +13,7 @@ from space_angel   import Angel
 # ---------------------------------------------------------
 from space_angel    import git_angel
 from space_angel    import terminal_gate
+from space_angel    import markdown_gate
 # -----------------------------------------------------------------------------
 # process
 # -----------------------------------------------------------------------------
@@ -56,9 +57,10 @@ class MyAngel(Angel):
         # report
         # ---------------------------------------------------------
         @self.gate_force('report')
-        #@markdown_gate
+        @markdown_gate
         def report(self, log, backlog):
-            print("report")
+            log('save', self.markdown.save(backlog))
+
         
 # -----------------------------------------------------------------------------
 # main
