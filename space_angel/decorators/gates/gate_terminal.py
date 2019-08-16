@@ -1,20 +1,23 @@
 # -----------------------------------------------------------------------------
 # imports
 # -----------------------------------------------------------------------------
-from ..resources import Markdown
+from ...resources import Terminal
+# -----------------------------------------------------------------------------
+# helpers
+# -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 # decorator
 # -----------------------------------------------------------------------------
-def markdown_gate(func):
+def gate_terminal(func):
     # wrap function
     def wrap(self, log, backlog):
         # set gate attribute
-        setattr(self, "markdown", Markdown(self.gate.output))
+        setattr(self, "terminal", Terminal(self.gate.commands))
         # call function
         func(self, log, backlog)
         # remove gate attribute
-        delattr(self, "markdown")
+        delattr(self, "terminal")
     # return terminal wrap
     return wrap
 # -----------------------------------------------------------------------------

@@ -32,21 +32,25 @@ class Logger(Action):
         self._actions[name] = action 
 
     # -----------------------------------------------------
-    # call - log register
+    # log 
     # -----------------------------------------------------
-    def __call__(self, path=None, action=None, base_result=0):
-        # execute
-        if action is None:
-            # update result recursive 
-            action = self.__update()
-        else:
-            # insert action in path
-            action = self.__insert(path.split('.'), action())
+    def log(self, path, action, *args, expect=0):
+        # insert action in path
+        action = self.__insert(path.split('.'), action(*args))
         # validation
-        if action.result() < base_result:
+        if action.result() < expect:
             raise Exception("{actual} < {expect}".format(
                 actual = action.result(),
-                expect = base_result))
+                expect = expect))
+        return self
+    
+    # -----------------------------------------------------
+    # call - log register
+    # -----------------------------------------------------
+    def __call__(self):
+        # update result recursive 
+        self.__update()
+        # return self
         return self
     
     # -----------------------------------------------------

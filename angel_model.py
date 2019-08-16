@@ -11,20 +11,20 @@ from space_angel   import Angel
 # ---------------------------------------------------------
 # decorators
 # ---------------------------------------------------------
-from space_angel    import git_angel
-from space_angel    import terminal_gate
-from space_angel    import markdown_gate
+from space_angel    import angel_git
+from space_angel    import gate_terminal
+from space_angel    import gate_markdown
 # -----------------------------------------------------------------------------
 # process
 # -----------------------------------------------------------------------------
-@git_angel
+@angel_git
 class MyAngel(Angel):
     def _pipeline(self):
         # ---------------------------------------------------------
         # build
         # ---------------------------------------------------------
         @self.gate('build')
-        @terminal_gate
+        @gate_terminal
         def build(self, log, backlog):
             # build code
             #log('build.1', self.terminal.build, base_result=0.9)
@@ -57,9 +57,9 @@ class MyAngel(Angel):
         # report
         # ---------------------------------------------------------
         @self.gate_force('report')
-        @markdown_gate
+        @gate_markdown
         def report(self, log, backlog):
-            log('save', self.markdown.save(backlog))
+            log('save', self.markdown.save, backlog)
 
         
 # -----------------------------------------------------------------------------

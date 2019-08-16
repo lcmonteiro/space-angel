@@ -76,25 +76,25 @@ class Angel:
     # process gates 
     # -----------------------------------------------------
     def _process(self):
-        backlog = Logger('gates')
+        backlogger = Logger('gates')
         # process each gate
         pipeline = True
         for name, gate in self.__gates.items():
             if pipeline or gate.force:
-                log = Logger(name)
+                logger = Logger(name)
                 # enable gate attribute
                 setattr(self, "gate", self.__config.gates[name])
                 # process gate
                 try:
-                    gate.call(self, log, backlog)
+                    gate.call(self, logger.log, backlogger)
                     pipeline = True
                 except:
                     pipeline = False
                 # disable gate attribute
                 delattr(self, "gate")
                 # save log in backlog
-                backlog(name, log)
-        return backlog()
+                backlogger.log(name, logger)
+        return backlogger()
 
     # -----------------------------------------------------
     # helpers
@@ -110,8 +110,8 @@ class Angel:
 def start(angel):
     try:
         angel(argv[1]).run()
-    except Exception as ex:
-        print('Exception: %s' %(ex))
+    #except Exception as ex:
+    #    print('Exception: %s' %(ex))
     except IndexError:
         print("Usage: angel.py [CONFIG_FILE].yaml")
     except KeyboardInterrupt:
