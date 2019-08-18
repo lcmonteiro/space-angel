@@ -50,8 +50,9 @@ class MyAngel(Angel):
         # test
         # ---------------------------------------------------------
         @self.gate('test')
+        @gate_parser('junit')
         def test(self, log, backlog):
-            print("test")
+            log('result', self.parser.load)
 
         # ---------------------------------------------------------
         # report
