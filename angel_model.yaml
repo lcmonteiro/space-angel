@@ -13,5 +13,4 @@ gates:
         commands:
             - "ctest"
     report:
-        folder:
-            - ""
+        output: './result.md'

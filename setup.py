@@ -21,14 +21,15 @@ setup(
     packages=[
         'space_angel',
         'space_angel.kernel',
-        'space_angel.angels',
-        'space_angel.gates',
+        'space_angel.decorators',
+        'space_angel.decorators.angels',
+        'space_angel.decorators.gates',
         'space_angel.resources'
     ],
     install_requires=[
         'parse',
-        'gitpython'
-
+        'gitpython',
+        'junitparser'
     ],
     classifiers=[],
  )

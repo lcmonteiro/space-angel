@@ -21,13 +21,22 @@ class Markdown:
     # -------------------------------------------------------------------------
     # Save Command
     # -------------------------------------------------------------------------
-    def save(self, data):
+    def save(self, logger):
         # open file in write mode
         doc = open(self._path, 'w')
-        # process
-
+        # main header
+        print('#', logger.header(), file=doc)
+        # gates
+        for each in logger:
+            pass
         # result
         return Action('save')()
+    # -------------------------------------------------------------------------
+    # insert header
+    # -------------------------------------------------------------------------
+    def __header(self,  text, file):
+        pass
+
     
 # -------------------------------------------------------------------------------------------------
 # end

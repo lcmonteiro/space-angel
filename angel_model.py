@@ -13,6 +13,7 @@ from space_angel   import Angel
 # ---------------------------------------------------------
 from space_angel    import angel_git
 from space_angel    import gate_terminal
+from space_angel    import gate_parser
 from space_angel    import gate_markdown
 # -----------------------------------------------------------------------------
 # process
@@ -50,8 +51,9 @@ class MyAngel(Angel):
         # test
         # ---------------------------------------------------------
         @self.gate('test')
+        @gate_parser('junit')
         def test(self, log, backlog):
-            print("test")
+            log('result', self.parser.load)
 
         # ---------------------------------------------------------
         # report
